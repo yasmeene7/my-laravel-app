@@ -7,11 +7,9 @@
 
     <title>Laravel Quickstart - Basic</title>
 
-    <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet">
 
-    <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -36,16 +34,13 @@
                     New Task
                 </div>
                 <div class="card-body">
-                    <!-- New Task Form -->
                     <form action="create" method="POST">
-                        @csrf
-                        <!-- Task Name -->
+                       @csrf
                         <div class="mb-3">
                             <label for="task-name" class="form-label">Task</label>
                             <input type="text" name="name" id="task-name" class="form-control" value="">
                         </div>
 
-                        <!-- Add Task Button -->
                         <div>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa fa-plus me-2"></i>Add Task
@@ -55,7 +50,6 @@
                 </div>
             </div>
 
-            <!-- Current Tasks -->
             <div class="card mt-4">
                 <div class="card-header">
                     Current Tasks
@@ -69,36 +63,27 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach ($tasks as $task)
+
                             <tr>
-                                <td>Task 1</td>
+                                <td> {{$task->name}}</td>
                                 <td>
-                                    <form action="#" method="POST" class="d-inline">
+                                    <form action="{{ url('/tasks/delete/'.$task->id) }}" method="POST" class="d-inline">
+                                        @csrf
+                                        @method('DELETE')
                                         <button type="submit" class="btn btn-danger">
                                             <i class="fa fa-trash me-2"></i>Delete
                                         </button>
                                     </form>
+
+                                    <a href="{{ url('/tasks/edit/'.$task->id) }}" class="btn btn-info d-inline-block text-white">
+                                        <i class="fa fa-edit me-2"></i>Edit
+                                    </a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Task 2</td>
-                                <td>
-                                    <form action="#" method="POST" class="d-inline">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa fa-trash me-2"></i>Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Task 3</td>
-                                <td>
-                                    <form action="#" method="POST" class="d-inline">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa fa-trash me-2"></i>Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -106,7 +91,6 @@
         </div>
     </div>
 
-    <!-- JavaScripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
